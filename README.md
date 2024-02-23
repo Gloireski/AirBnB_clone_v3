@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Belem Gloire BEKOUTOU - [Github](https://github.com/Gloireski)
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Tanatswa Gendere - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
 ## License
