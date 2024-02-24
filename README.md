@@ -156,7 +156,5 @@ No known bugs at this time.
 ## Authors
 Belem Gloire BEKOUTOU - [Github](https://github.com/Gloireski)
 Tanatswa Gendere - [Github](https://github.com/Tanagends)
-
-Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
