@@ -22,7 +22,7 @@ def index():
     """ return status ok """
     return jsonify({"status": "OK"})
 
-@app_views.route('/stats')
+@app_views.route('/stats', methods=['GET'])
 def count():
     """retrieves the number of each objects by type"""
     count_dict = {}
