@@ -7,13 +7,13 @@ from models import storage
 
 
 @app_views.route('/states/', methods=['GET'], strict_slashes=False)
-def getList():
+def getStateList():
     """Retrieves the list of all State objects"""
     state_list = [obj.to_dict() for obj in storage.all("State").values()]
     return jsonify(state_list)
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
-def get(state_id):
+def get_state(state_id):
     """Retrieves a State object"""
     obj = storage.get(State, state_id)
     if obj:
@@ -22,7 +22,7 @@ def get(state_id):
         abort(404)
 
 @app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
-def delete(state_id):
+def delete_state(state_id):
     """Deletes a State object"""
     obj = storage.get(State, state_id)
     if obj:
@@ -33,7 +33,7 @@ def delete(state_id):
     abort(404)
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
-def create():
+def create_state():
     """Creates a State"""
     if not request.get_json():
         abort(404, 'Not a JSON')
@@ -45,7 +45,7 @@ def create():
     return jsonify(newState.to_dict()), 201
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
-def update(state_id):
+def update_state(state_id):
     """Updates a State"""
     obj = storage.get(State, state_id)
     if obj is not None:
