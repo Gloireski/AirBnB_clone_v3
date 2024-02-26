@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" app """
+""" Our HBnB app using api interfacing"""
 from flask import Flask, Blueprint
 from models import storage
 from api.v1.views import app_views
