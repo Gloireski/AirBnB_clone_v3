@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-"""amenity"""
+"""Place"""
 from api.v1.views import app_views
 from models.place import Place
-fron models.city import City
+from models.city import City
 from flask import jsonify, abort, request
 from models import storage
 
@@ -35,7 +35,7 @@ def delete_place(place_id):
         return jsonify({}), '200'
     abort(404)
 
-@app_views.place('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
 def create_place():
     """Creates a Place"""
     city = storage.get(City, city_id)

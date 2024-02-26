@@ -6,7 +6,7 @@ from models import storage
 from models.user import User
 
 
-@app_view.route("/users", methods=["GET", "POST"])
+@app_views.route("/users", methods=["GET", "POST"])
 def all_users():
     """Retrieves all users or posts a new user"""
 
