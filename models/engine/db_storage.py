@@ -83,8 +83,8 @@ class DBStorage:
             for key in count:
                 if key == tmp:
                     return count[key]
-                else:
-                    return None
+        else:
+            return None
 
     def count(self, cls=None):
         """method to count the number of objects in storage"""
