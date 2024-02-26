@@ -16,6 +16,14 @@ def tearDowm(self):
     storage.close()
 
 
+@app.errorhandler(404)
+def not_found():
+    """Returns a not found, 404 json error"""
+    response = jsonify({"error": "Not found"})
+    response.status_code = 404
+    return response
+
+
 if __name__ == "__main__":
     if os.getenv("HBNB_API_HOST") is None:
         HBNB_API_HOST = "0.0.0.0"
