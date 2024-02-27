@@ -2,7 +2,6 @@
 """
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
-
 from datetime import datetime
 import inspect
 import models
@@ -18,6 +17,8 @@ import json
 import os
 import pep8
 import unittest
+
+
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -90,7 +91,6 @@ class TestFileStorage(unittest.TestCase):
 
 class TestDBStorage(unittest.TestCase):
     """Test the DBStorage class"""
-
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
                      "not testing db storage")
     def test_get(self):
@@ -99,10 +99,10 @@ class TestDBStorage(unittest.TestCase):
         newState.save()
         newUser = User(email="bob@foobar.com", password="password")
         newUser.save()
-        self.assertIs(newState, models.storage.get("State", newState.id))
-        self.assertIs(None, models.storage.get("State", "blah"))
-        self.assertIs(None, models.storage.get("blah", "blah"))
-        self.assertIs(newUser, models.storage.get("User", newUser.id))
+        self.assertIs(newState, models.storage.get(State, newState.id))
+        self.assertIs(None, models.storage.get(State, "blah"))
+        self.assertIs(None, models.storage.get(blah, "blah"))
+        self.assertIs(newUser, models.storage.get(User, newUser.id))
 
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
                      "not testing db storage")
@@ -113,6 +113,6 @@ class TestDBStorage(unittest.TestCase):
         newState = State(name="Montevideo")
         newState.save()
         newUser = User(email="ralexrivero@gmail.com.com", password="dummypass")
-        newUser.save()
+	newUser.save()
         self.assertEqual(models.storage.count("State"), startCount + 1)
         self.assertEqual(models.storage.count(), startCount + 2)
