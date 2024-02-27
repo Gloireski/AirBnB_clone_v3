@@ -11,7 +11,7 @@ def all_users():
     """Retrieves all users or posts a new user"""
 
     if request.method == "GET":
-        users = storage.all("User")
+        users = storage.all(User).values()
         user_list = [user.to_dict() for user in users]
         return jsonify(user_list)
     else:
@@ -39,18 +39,18 @@ def user_getter(user_id):
     if request.method == "GET":
         return jsonify(user.to_dict())
     elif request.method == "DELETE":
-        user.delete()
+        storage.delete(user)
+        storage.save()
         return {}, 200
     else:
         update_dict = request.get_json()
         if update_dict is None:
             abort(404, "Not a JSON")
         else:
-            user_dict = user.__dict__
-            user.delete()
-            ignored_keys = ["id", "state_id", "created_at", "updated_at"]
+            ignored_keys = ["id", "email", "created_at", "updated_at"]
 
             for key, value in update_dict.items():
-                if key in user_dict and key not in ignored_keys:
-                    user.key = value
+                if key not in ignored_keys:
+                    setattr(user, key, value)
             user.save()
+            return jsonify(user.to_dict()), 200
