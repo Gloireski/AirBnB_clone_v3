@@ -16,11 +16,11 @@ classes = {"users": "User", "places": "Place", "states": "State",
            "reviews": "Review"}
 
 
-
 @app_views.route('/status')
 def index():
     """ return status ok """
     return jsonify({"status": "OK"})
+
 
 @app_views.route('/stats', methods=['GET'])
 def count():
