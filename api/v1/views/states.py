@@ -36,7 +36,7 @@ def delete_state(state_id):
     abort(404)
 
 
-@app_views.route('/states', methods=['POST'], strict_slashes=False)
+@app_views.route('/states/', methods=['POST'], strict_slashes=False)
 def create_state():
     """Creates a State"""
     if not request.get_json():
@@ -53,10 +53,30 @@ def create_state():
 def update_state(state_id):
     """Updates a State"""
     obj = storage.get(State, state_id)
-    if obj is not None:
+    if obj:
         if not request.get_json():
-            abort('404', 'Not a JSON')
+            abort(404, 'Not a JSON')
         obj.name = request.json['name']
         storage.save()
         return jsonify(obj.to_dict()), 200
-    abort(404)
+    else:
+        abort(404)
+
+
+@app_views.errorhandler(404)
+def not_found(error):
+    """
+    Raises a 404 error.
+    """
+    response = {'error': 'Not found'}
+    return jsonify(response), 404
+
+
+@app_views.errorhandler(400)
+def bad_request(error):
+    """
+    Raises a 400 error.
+    """
+    response = {'error': 'Bad request'}
+    return jsonify(response), 400
+
