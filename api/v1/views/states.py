@@ -7,7 +7,7 @@ from models import storage
 
 
 @app_views.route('/states/', methods=['GET'])
-def getStateList():
+def get_all_state():
     """Retrieves the list of all State objects"""
     state_list = [obj.to_dict() for obj in storage.all("State").values()]
     return jsonify(state_list)
@@ -63,7 +63,7 @@ def update_state(state_id):
 
 
 @app_views.errorhandler(404)
-def not_found(error):
+def state_not_found(error):
     """
     Raises a 404 error.
     """

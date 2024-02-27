@@ -7,8 +7,7 @@ from flask import jsonify, abort, request
 from models import storage
 
 
-@app_views.route('/cities/<city_id>/places', methods=['GET'],
-                 strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['GET'])
 def get_places_by_city():
     """Retrieves the list of all Place objects of a City"""
     city = storage.get(City, city_id)
@@ -18,8 +17,7 @@ def get_places_by_city():
     return jsonify(places)
 
 
-@app_views.route('/places/<place_id>', methods=['GET'],
-                 strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['GET']
 def get_place(amenity_id):
     """Retrieves an Place object"""
     obj = storage.get(Place, place_id)
@@ -29,20 +27,18 @@ def get_place(amenity_id):
         abort(404)
 
 
-@app_views.route('/places/<place_id>', methods=['DELETE'],
-                 strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['DELETE'])
 def delete_place(place_id):
     """Deletes an Place object"""
     obj = storage.get(Place, place_id)
     if obj:
         storage.delete(obj)
         storage.save()
-        return jsonify({}), '200'
+        return jsonify({}), 200
     abort(404)
 
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'],
-                 strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['POST'])
 def create_place():
     """Creates a Place"""
     city = storage.get(City, city_id)
@@ -59,12 +55,11 @@ def create_place():
     return jsonify(place.to_dict()), 201
 
 
-@app_views.route('/places/<place_id>', methods=['PUT'],
-                 strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['PUT'])
 def update_place(place_id):
     """Updates a place"""
     obj = storage.get(Place, place_id)
-    if obj is not None:
+    if is not obj:
         if not request.get_json():
             abort('404', 'Not a JSON')
         obj.name = request.json['name']
