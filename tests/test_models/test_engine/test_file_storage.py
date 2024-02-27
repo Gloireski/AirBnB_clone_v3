@@ -119,9 +119,9 @@ class TestFileStorage(unittest.TestCase):
             Test if get method retrieves obj requested
         '''
         new_state = State(name="NewYork")
-        storage.new(new_state)
+        models.storage.new(new_state)
         key = "State.{}".format(new_state.id)
-        result = storage.get("State", new_state.id)
+        result = models.storage.get(State, new_state.id)
         self.assertTrue(result.id, new_state.id)
         self.assertIsInstance(result, State)
 
@@ -129,7 +129,7 @@ class TestFileStorage(unittest.TestCase):
         '''
             Test if count method returns expected number of objects
         '''
-        old_count = storage.count("State")
+        old_count = models.storage.count("State")
         new_state1 = State(name="NewYork")
         storage.new(new_state1)
         new_state2 = State(name="Virginia")
