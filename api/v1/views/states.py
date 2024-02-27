@@ -60,21 +60,3 @@ def update_state(state_id):
         return jsonify(obj.to_dict()), 200
     else:
         abort(404)
-
-
-@app_views.errorhandler(404)
-def state_not_found(error):
-    """
-    Raises a 404 error.
-    """
-    response = {'error': 'Not found'}
-    return jsonify(response), 404
-
-
-@app_views.errorhandler(400)
-def bad_request(error):
-    """
-    Raises a 400 error.
-    """
-    response = {'error': 'Bad request'}
-    return jsonify(response), 400

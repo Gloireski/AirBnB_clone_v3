@@ -17,11 +17,11 @@ def all_users():
     else:
         params = request.get_json()
         if params is None:
-            abort(400, description="Not a JSON")
+            abort(400, "Not a JSON")
         if params.get("email") is None:
-            abort(400, description="Missing name")
+            abort(400, "Missing name")
         if params.get("password") is None:
-            abort(400, description="Missing password")
+            abort(400, "Missing password")
 
         new_user = User(**(params))
         new_user.save()
@@ -32,7 +32,7 @@ def all_users():
 def user_getter(user_id):
     """Gets, deletes or updates a user by its id"""
 
-    user = storage.get("User", user_id)
+    user = storage.get(User, user_id)
     if user is None:
         abort(404)
 
@@ -44,7 +44,7 @@ def user_getter(user_id):
     else:
         update_dict = request.get_json()
         if update_dict is None:
-            abort(404, description="Not a JSON")
+            abort(404, "Not a JSON")
         else:
             user_dict = user.__dict__
             user.delete()
