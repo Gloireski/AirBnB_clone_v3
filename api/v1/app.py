@@ -11,7 +11,7 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def tearDowm(self):
+def tearDowm(exception):
     """ close the storage engine"""
     storage.close()
 
