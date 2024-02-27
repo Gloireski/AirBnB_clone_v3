@@ -33,7 +33,7 @@ def user_getter(user_id):
     """Gets, deletes or updates a user by its id"""
 
     user = storage.get(User, user_id)
-    if user is None:
+    if not user:
         abort(404)
 
     if request.method == "GET":
