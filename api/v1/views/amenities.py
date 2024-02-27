@@ -26,7 +26,6 @@ def delete_amenity(amenity_id):
     """Deletes an Amenity object"""
     obj = storage.get(Amenity, amenity_id)
     if obj:
-        #print(obj.to_dict())
         storage.delete(obj)
         storage.save()
         return jsonify({}), '200'

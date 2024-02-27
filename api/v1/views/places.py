@@ -52,7 +52,7 @@ def create_place():
     return jsonify(place.to_dict()), 201
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
-def update_amenity(place_id):
+def update_place(place_id):
     """Updates a place"""
     obj = storage.get(Place, place_id)
     if obj is not None:
