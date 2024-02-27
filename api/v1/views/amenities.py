@@ -44,7 +44,7 @@ def create_amenity():
     if not request.get_json():
         abort(404, 'Not a JSON')
     if 'name' not in request.get_json():
-        return abort(400, 'Missing name')
+        abort(400, 'Missing name')
     newAmenity = Amenity(name=request.json['name'])
     storage.new(newAmenity)
     storage.save()
@@ -61,5 +61,5 @@ def update_amenity(amenity_id):
             abort('404', 'Not a JSON')
         obj.name = request.json['name']
         storage.save()
-        return jsonify(obj.to_dict()), '200'
+        return jsonify(obj.to_dict()), 200
     abort(404)
