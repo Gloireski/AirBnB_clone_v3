@@ -17,7 +17,7 @@ def get_places_by_city():
     return jsonify(places)
 
 
-@app_views.route('/places/<place_id>', methods=['GET']
+@app_views.route('/places/<place_id>', methods=['GET'])
 def get_place(amenity_id):
     """Retrieves an Place object"""
     obj = storage.get(Place, place_id)
@@ -59,7 +59,7 @@ def create_place():
 def update_place(place_id):
     """Updates a place"""
     obj = storage.get(Place, place_id)
-    if is not obj:
+    if not obj:
         if not request.get_json():
             abort('404', 'Not a JSON')
         obj.name = request.json['name']
