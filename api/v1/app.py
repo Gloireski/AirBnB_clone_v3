@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ Our HBnB app using api interfacing"""
-from flask import Flask, Blueprint
+from flask import Flask, Blueprint, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
@@ -14,6 +14,13 @@ app.register_blueprint(app_views)
 def tearDowm(self):
     """ close the storage engine"""
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(error):
+    """Return errmsg `Not Found`."""
+    response = {'error': 'Not found'}
+    return jsonify(response), 404
 
 
 if __name__ == "__main__":
