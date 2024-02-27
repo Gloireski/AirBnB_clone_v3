@@ -4,6 +4,7 @@ from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models import storage
 from models.city import City
+from models.state import State
 
 
 @app_views.route('/states/<state_id>/cities', methods=["GET", "POST"])
@@ -12,7 +13,7 @@ def state_cities(state_id):
        POST: Creates new city in the state
     """
 
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
 
@@ -26,8 +27,8 @@ def state_cities(state_id):
             abort(400, description="Not a JSON")
         if new_dict.get("name") is None:
             abort(400, description="Missing name")
-
-        new_city = City(**(new_dict.update({"state_id": state_id})))
+        new_dict['state_id'] = state_id
+        new_city = City(**new_dict)
         new_city.save()
         return jsonify(new_city.to_dict()), 201
 
@@ -36,14 +37,15 @@ def state_cities(state_id):
 def city_getter(city_id):
     """Retrieves a city by its id"""
 
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
 
     if request.method == "GET":
         return jsonify(city.to_dict())
     elif request.method == "DELETE":
-        city.delete()
+        storage.delete(city)
+        storage.save()
         return {}, 200
     else:
         update_dict = request.get_json()
@@ -55,6 +57,7 @@ def city_getter(city_id):
             ignored_keys = ["id", "state_id", "created_at", "updated_at"]
 
             for key, value in update_dict.items():
-                if key in city_dict and key not in ignored_keys:
-                    city.key = value
+                if key not in ignored_keys:
+                    setattr(city, key, value)
             city.save()
+            return jsonify(city.to_dict()), 200
