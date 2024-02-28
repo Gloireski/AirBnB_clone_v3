@@ -9,7 +9,7 @@ from models import storage
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'])
-def get_places_by_city():
+def get_places_by_city(city_id):
     """Retrieves the list of all Place objects of a City"""
     city = storage.get(City, city_id)
     if not city:
@@ -19,7 +19,7 @@ def get_places_by_city():
 
 
 @app_views.route('/places/<place_id>', methods=['GET'])
-def get_place(amenity_id):
+def get_place(place_id):
     """Retrieves an Place object"""
     obj = storage.get(Place, place_id)
     if obj:
@@ -40,7 +40,7 @@ def delete_place(place_id):
 
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'])
-def create_place():
+def create_place_by_city(city_id):
     """Creates a Place"""
     city = storage.get(City, city_id)
     if not city:
@@ -65,10 +65,10 @@ def create_place():
 def update_place(place_id):
     """Updates a place"""
     obj = storage.get(Place, place_id)
-    if not obj:
+    if obj:
         data = request.get_json()
         if not data:
-            abort('400', 'Not a JSON')
+            abort(400, 'Not a JSON')
         ignore_keys = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
         for key, value in data.items():
             if key not in ignore_keys:
