@@ -3,6 +3,7 @@
 from api.v1.views import app_views
 from models.place import Place
 from models.city import City
+from models.user import User
 from flask import jsonify, abort, request
 from models import storage
 
@@ -45,10 +46,15 @@ def create_place():
     if not city:
         abort(404)
     if not request.get_json():
-        abort(404, 'Not a JSON')
+        abort(400, 'Not a JSON')
     data = request.get_json()
+    if 'user_id' not in data:
+        abort(400, 'Missing user_id')
     if 'name' not in data:
-        return abort(400, 'Missing name')
+        abort(400, 'Missing name')
+    user = storage.get(User, data['user_id'])
+    if not user:
+        abort(404)
     data['city_id'] = city_id
     place = Place(**data)
     place.save()
@@ -60,9 +66,13 @@ def update_place(place_id):
     """Updates a place"""
     obj = storage.get(Place, place_id)
     if not obj:
-        if not request.get_json():
-            abort('404', 'Not a JSON')
-        obj.name = request.json['name']
-        storage.save()
-        return jsonify(obj.to_dict()), '200'
+        data = request.get_json()
+        if not data:
+            abort('400', 'Not a JSON')
+        ignore_keys = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
+        for key, value in data.items():
+            if key not in ignore_keys:
+                setattr(obj, key, value)
+        obj.save()
+        return jsonify(obj.to_dict()), 200
     abort(404)
