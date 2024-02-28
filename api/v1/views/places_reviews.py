@@ -56,9 +56,10 @@ def reviews_getter(review_id):
         if not update_dict:
             abort(400, "Not a JSON")
         else:
-            ignored_keys = ["id", "state_id", "place_id", "created_at", "updated_at"]
+            ignored_keys = ["id", "user_id", "place_id", "created_at",
+                            "updated_at"]
             for key, value in update_dict.items():
                 if key not in ignored_keys:
-                    setattr(update_dict, key, value)
+                    setattr(review, key, value)
             review.save()
             return jsonify(review.to_dict()), 200
